@@ -17,15 +17,13 @@
         }
 
         .light-mode {
-    color: black;
-    
+            color: black;
         }
 
-
-.dark-mode {
-    background-color: black;
-    color: white; /* Adjust text color for dark mode */
-}
+        .dark-mode {
+            background-color: black;
+            color: white; /* Adjust text color for dark mode */
+        }
 
         .clock {
             display: flex;
@@ -48,10 +46,32 @@
             animation: flip 500ms alternate infinite;
         }
 
+        .button-container {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            display: none; /* Initially hidden */
+        }
+        .ampm {
+            margin: 0 0.1em;
+            text-align: center;
+            font-size: 75px; /* Adjust the font size as needed */
+            font-family: honk;
+            text-shadow: 7px 1px 0px rgb(59, 58, 58);
+            transition:1s ease-in-out;
+        }
+        .ampm:hover{
+            transition:1000ms ease-in;
+            text-overflow: clip;
+            margin: 0;
+            text-align: center;
+            font-family: honk;
+            font-size: 100px;
+        }
         .button {
             position: absolute;
             bottom: 20px;
-            left: 50%;
+            left: 10%;
             transform: translateX(-50%);
             padding: 5px 15px;
             cursor: grabbing;
@@ -59,55 +79,87 @@
             background-color: rgb(196, 190, 190);
             border-radius: 15px;
         }
-        .ampm {
-    margin: 0 0.1em;
-    text-align: center;
-    font-size: 75px; /* Adjust the font size as needed */
-    font-family: honk;
-text-shadow: 7px 1px 0px rgb(59, 58, 58);
-}
-.ampm:hover{
-    margin: 0 0.1em;
-    text-align: center;
-    font-size: 75px; /* Adjust the font size as needed */
-    font-family: honk;
-text-shadow: 2px 1px 0px rgb(63, 62, 62);
-}
-
-
-    
+        .buttn {
+            display: block;
+            margin-bottom: 5px;
+            cursor: grabbing;
+            border: 2px solid rgb(0, 0, 0);
+            background-color: rgb(196, 190, 190);
+            border-radius: 15px;
+        }
+        .volume-slider {
+            width: 100px;
+        }
     </style>
 </head>
 <body>
-    <div class="clock">
-        <div class="ampm"></div>
-        <div class="hour"></div>
-        <hr></hr>
-        <div class="minute"></div>
-        <hr></hr>
-        <div class="seconds"></div>
-    </div>
-    <button onclick="toggleMode()" class="button">Toggle Mode</button>
-    <script>
-        function updateTime() {
-            const now = new Date();
-            const hours = (now.getHours() % 12) || 12; // Convert to 12-hour format
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            const ampm = now.getHours() >= 12 ? 'PM' : 'AM'; // Get AM/PM indicator
+<div class="clock">
+    <div class="ampm"></div>
+    <div class="hour"></div>
+    <hr></hr>
+    <div class="minute"></div>
+    <hr></hr>
+    <div class="seconds"></div>
+</div>
+<button onclick="toggleMode()" class="button">Toggle Mode</button>
+<button onclick="toggleMusic()" class="buttn">Some Music</button>
+<div class="button-container" id="music-controls">
+    <button onclick="toggleAudio()" class="buttn">Toggle Sound</button>
+    <button onclick="muteAudio()" class="buttn">Mute</button>
+    <button onclick="unmuteAudio()" class="buttn">Unmute</button>
+    <input type="range" min="0" max="1" step="0.1" value="1" class="volume-slider" onchange="adjustVolume(this.value)">
+</div>
 
-            document.querySelector('.ampm').textContent = ampm;
-            document.querySelector('.hour').textContent = hours; 
-            document.querySelector('.minute').textContent = minutes;
-            document.querySelector('.seconds').textContent = seconds;
+<audio id="tick-tock" src="mujik.mp3" preload="auto" autoplay></audio>
+
+<script>
+    const tickTockAudio = document.getElementById('tick-tock');
+    const musicControls = document.getElementById('music-controls');
+
+    function toggleMusic() {
+        musicControls.style.display = 'block';
+    }
+
+    function toggleAudio() {
+        if (tickTockAudio.paused) {
+            tickTockAudio.play();
+        } else {
+            tickTockAudio.pause();
         }
+    }
 
-        setInterval(updateTime, 1000);
+    function muteAudio() {
+        tickTockAudio.muted = true;
+    }
 
-        function toggleMode() {
-            document.body.classList.toggle('light-mode');
-            document.body.classList.toggle('dark-mode');
-        }
-    </script>
+    function unmuteAudio() {
+        tickTockAudio.muted = false;
+    }
+
+    function adjustVolume(volume) {
+        tickTockAudio.volume = volume;
+    }
+
+    function updateTime() {
+        const now = new Date();
+        const hours = (now.getHours() % 12) || 12; // Convert to 12-hour format
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        const ampm = now.getHours() >= 12 ? 'PM' : 'AM'; // Get AM/PM indicator
+
+        document.querySelector('.ampm').textContent = ampm;
+        document.querySelector('.hour').textContent = hours;
+        document.querySelector('.minute').textContent = minutes;
+        document.querySelector('.seconds').textContent = seconds;
+    }
+
+    setInterval(updateTime, 1000);
+
+    function toggleMode() {
+        document.body.classList.toggle('light-mode');
+        document.body.classList.toggle('dark-mode');
+    }
+</script>
+
 </body>
 </html>
