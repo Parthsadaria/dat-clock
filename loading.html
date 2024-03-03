@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f2f2f2;
+        }
+
+        .loading-wrapper {
+            text-align: center;
+            animation: fadeIn 2s ease-out forwards;
+        }
+
+        .loading-bar {
+            width: 300px;
+            height: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .progress {
+            width: 0;
+            height: 100%;
+            background-color: #4CAF50;
+            animation: progressAnimation 3s linear forwards;
+        }
+
+        @keyframes progressAnimation {
+            0% { width: 0; }
+            30% { width: 30%; }
+            65% { width: 65%; }
+            80% { width: 80%; }
+            100% { width: 100%; }
+        }
+
+        .loading-text {
+            font-size: 24px;
+            animation: fadeIn 2s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-wrapper">
+        <div class="loading-bar">
+            <div class="progress"></div>
+        </div>
+        <div class="loading-text">Loading...</div>
+    </div>
+
+    <script>
+        setTimeout(function() { window.location.href = "fliqlo.html"; }, 3000);
+    </script>
+</body>
+</html>

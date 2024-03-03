@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fliqlo Clock</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Honk&display=swap');
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: white;
+            position: relative;
+        }
+
+        .light-mode {
+    color: black;
+    
+        }
+
+
+.dark-mode {
+    background-color: black;
+    color: white; /* Adjust text color for dark mode */
+}
+
+        .clock {
+            display: flex;
+            font-family: Helvetica;
+            font-size: 10em;
+        }
+
+        .hour, .minute, .ampm {
+            margin: 0 0.1em;
+            text-align: center;
+            font-size: 300px;
+            font-family: honk;
+        }
+
+        .seconds {
+            margin: 0 0.1em;
+            text-align: center;
+            font-size: 300px;
+            font-family: honk;
+            animation: flip 500ms alternate infinite;
+        }
+
+        .button {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 5px 15px;
+            cursor: grabbing;
+            border: 2px solid rgb(0, 0, 0);
+            background-color: rgb(196, 190, 190);
+            border-radius: 15px;
+        }
+        .ampm {
+    margin: 0 0.1em;
+    text-align: center;
+    font-size: 75px; /* Adjust the font size as needed */
+    font-family: honk;
+text-shadow: 7px 1px 0px rgb(59, 58, 58);
+}
+.ampm:hover{
+    margin: 0 0.1em;
+    text-align: center;
+    font-size: 75px; /* Adjust the font size as needed */
+    font-family: honk;
+text-shadow: 2px 1px 0px rgb(63, 62, 62);
+}
+
+
+    
+    </style>
+</head>
+<body>
+    <div class="clock">
+        <div class="ampm"></div>
+        <div class="hour"></div>
+        <hr></hr>
+        <div class="minute"></div>
+        <hr></hr>
+        <div class="seconds"></div>
+    </div>
+    <button onclick="toggleMode()" class="button">Toggle Mode</button>
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = (now.getHours() % 12) || 12; // Convert to 12-hour format
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const ampm = now.getHours() >= 12 ? 'PM' : 'AM'; // Get AM/PM indicator
+
+            document.querySelector('.ampm').textContent = ampm;
+            document.querySelector('.hour').textContent = hours; 
+            document.querySelector('.minute').textContent = minutes;
+            document.querySelector('.seconds').textContent = seconds;
+        }
+
+        setInterval(updateTime, 1000);
+
+        function toggleMode() {
+            document.body.classList.toggle('light-mode');
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
