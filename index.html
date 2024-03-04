@@ -32,16 +32,16 @@
         }
 
         .hour, .minute, .ampm {
-            margin: 0 0.1em;
+            margin: 0 0.19em;
             text-align: center;
-            font-size: 300px;
+            font-size: 320px;
             font-family: honk;
         }
 
         .seconds {
-            margin: 0 0.1em;
+            margin: 0 0.19em;
             text-align: center;
-            font-size: 300px;
+            font-size: 320px;
             font-family: honk;
             animation: flip 500ms alternate infinite;
         }
@@ -74,9 +74,9 @@
             bottom: 20px;
             left: 10%;
             margin-bottom: 5px;
-            cursor: grabbing;
+            cursor: pointer;
             border: 2px solid rgb(0, 0, 0);
-            background-color: rgb(255, 208, 0);
+    
             border-radius: 15px;
         }
         .buttn {
@@ -86,10 +86,13 @@
     position: absolute;
     bottom: 20px;
     left: 20px;
-    cursor: grabbing;
-    border: 4px solid rgb(0, 0, 0);
-    background-color: rgb(255, 208, 0);
-    border-radius: 15px;
+    cursor:pointer;
+    background-color: transparent;
+    border: 2px transparent ;
+    border-radius: 15px;    
+    color: #000000;
+  text-shadow:
+      0 0 6px #0fa;
 }
 .btton {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -98,15 +101,56 @@
     position: absolute;
     bottom: 90%;
     right: 20px;
-    cursor: grabbing;
+    cursor: pointer;
     border: 2px solid rgb(0, 0, 0);
-    background-color: rgb(255, 208, 0);
+    background-color: transparent;
     border-radius: 15px;
+}
+
+.batton {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    bottom: 90%;
+    right: 20px;
+    cursor: pointer;
+    border: 2px solid rgb(0, 0, 0);
+      background-color: transparent;
+    border-radius: 50%;
+}
+.batton img {
+    position: relative;
+    left: -6px; /* Adjust the left value to move the image left */
+    align-items: center;
+    height: 46px;
+    width: 46px;
+    top: -1px;
+    transition: transform 0.3s ease; /* Add transition effect */
+}
+
+.batton img.paused {
+
+    transform: rotate(180deg); /* Adjust the rotation as needed */
 }
 
         .volume-slider {
             width: 100px;
         }
+        .view{
+            display : none;
+        }
+        .ass{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            width: 60px;
+    height: 50px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    cursor: pointer;
+    border: 4px solid rgb(0, 0, 0);
+    border-radius: 15px;
+}
     </style>
 </head>
 <body>
@@ -118,10 +162,12 @@
     <hr></hr>
     <div class="seconds"></div>
 </div>
+<!-- <button onclick="wantbut()" class="ass">Toggle button</button> -->
 <button onclick="toggleMode()" class="buttn">Toggle Mode</button>
-<button onclick="toggleMusic()" class="btton">Some Music</button>
+<button onclick="wantbut()" class="btton">Some Music</button>
 <div class="button-container" id="music-controls">
-    <button onclick="toggleAudio()" class="button">Toggle Sound</button>
+    <button onclick="toggleAudio()" class="batton"><img src="play.png" alt="Play"></button>
+
     <button onclick="muteAudio()" class="button">Mute</button>
     <button onclick="unmuteAudio()" class="button">Unmute</button>
     <input type="range" min="0" max="1" step="0.1" value="1" class="volume-slider" onchange="adjustVolume(this.value)">
@@ -138,15 +184,31 @@
     function toggleMusic() {
         musicControls.style.display = 'block';
     }
+    function wantbut() {
+    const buttonContainer = document.getElementById('music-controls');
+    if (buttonContainer.style.display === 'none' || buttonContainer.style.display === '') {
+        buttonContainer.style.display = 'block';
+    } else {
+        buttonContainer.style.display = 'none';
+    }
+}
 
-    function toggleAudio() {
-        if (tickTockAudio.paused) {
-            tickTockAudio.play();
-        } else {
-            tickTockAudio.pause();
-        }
+
+
+function toggleAudio() {
+    const playButton = document.querySelector('.batton img');
+
+    if (tickTockAudio.paused) {
+        tickTockAudio.play();
+        playButton.setAttribute('src', 'play.png');
+    } else {
+        tickTockAudio.pause();
+        playButton.setAttribute('src', 'pause.png');
     }
 
+    // Add transition class
+    playButton.classList.toggle('paused');
+}
     function muteAudio() {
         tickTockAudio.muted = true;
     }
